@@ -40,6 +40,7 @@ public class CallApi {
         URI url = URI.create(ApiEnv.URL+addUrl);
 
         //GET으로 보내는 경우 : 쿼리파라미터는 url에 붙여 보내면 댐
+        System.out.println("url = " + url);
         RequestEntity<String> req = new RequestEntity<>(headers, HttpMethod.GET, url);
         return restTemplate.exchange(req, String.class);
     }

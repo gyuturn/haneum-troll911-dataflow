@@ -1,5 +1,4 @@
-package haneum.troller.dataflow.kafka.fullSearch;
-
+package haneum.troller.dataflow.kafka.userInfo;
 
 import haneum.troller.dataflow.repository.GameRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +6,12 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FullRecordProducer {
-    private static final String TOPIC = "full_record";
+public class UserInfoProducer {
+    private static final String TOPIC = "user_info";
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
-    public FullRecordProducer(KafkaTemplate kafkaTemplate) {
+    public UserInfoProducer(KafkaTemplate kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
@@ -20,7 +19,8 @@ public class FullRecordProducer {
     public GameRecordRepository gameRecordRepository;
 
 
-    public void sendFullRecordJson(String key,String message) {
-        this.kafkaTemplate.send(TOPIC,key,message);
+    public void sendUserInfo(String key, String message) {
+        this.kafkaTemplate.send(TOPIC, key, message);
     }
+
 }
