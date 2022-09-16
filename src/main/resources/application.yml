@@ -43,6 +43,7 @@ spring:
 
 
 logging:
+  file: /var/log/requestloggingweb/requestloggingweb.log
   level:
     haneum:
       troller: DEBUG
