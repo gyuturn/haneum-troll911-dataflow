@@ -12,6 +12,7 @@ public class LolNameToList {
 
 
     public static List<String> readLolNameTxt() throws IOException {
+        System.out.println("path = " + path);
         FileReader fileReader = new FileReader(path+lolNameFile);
 
         BufferedReader bufferedReader = new BufferedReader(fileReader);
