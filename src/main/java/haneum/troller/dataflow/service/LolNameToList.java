@@ -11,12 +11,12 @@ public class LolNameToList {
 
     //경로 추후 클라우드에 올릴 시 문제?
     static File lolNameFile = new File("src/main/resources/lolname-test.txt");
-    static String path = System.getProperty("user.dir");
+//    static String path = System.getProperty("user.dir");
 
 
     public static List<String> readLolNameTxt() throws IOException {
-        log.info("path:{}",path);
-        FileReader fileReader = new FileReader(path+lolNameFile);
+//        log.info("path:{}",path);
+        FileReader fileReader = new FileReader(lolNameFile);
 
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String lolName = "";
