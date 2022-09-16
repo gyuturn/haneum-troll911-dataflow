@@ -10,7 +10,7 @@ import java.util.List;
 public class LolNameToList {
 
     //경로 추후 클라우드에 올릴 시 문제?
-    static File lolNameFile = new File("/src/main/resources/lolname-test.txt");
+    static File lolNameFile = new File("src/main/resources/lolname-test.txt");
     static String path = System.getProperty("user.dir");
 
 
