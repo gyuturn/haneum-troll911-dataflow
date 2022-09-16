@@ -1,9 +1,12 @@
 package haneum.troller.dataflow.service;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class LolNameToList {
 
     //경로 추후 클라우드에 올릴 시 문제?
@@ -12,7 +15,7 @@ public class LolNameToList {
 
 
     public static List<String> readLolNameTxt() throws IOException {
-        System.out.println("path = " + path);
+        log.info("path:{}",path);
         FileReader fileReader = new FileReader(path+lolNameFile);
 
         BufferedReader bufferedReader = new BufferedReader(fileReader);

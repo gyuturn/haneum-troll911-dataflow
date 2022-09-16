@@ -44,7 +44,7 @@ spring:
 
 logging:
   file:
-    path: /var/log/requestloggingweb/requestloggingweb.log
+    path: /var/log
 #  file: /var/log/requestloggingweb/requestloggingweb.log
   level:
     haneum:
