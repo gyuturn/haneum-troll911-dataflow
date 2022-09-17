@@ -62,17 +62,20 @@ public class KafkaScheduler {
      * 처음 초기 세팅시에만 사용
      * 처음 db구성시 해당 함수를 통해 create, timestamp를 함께넣어 db에 저장(nifi??)
      */
-    @Scheduled(fixedDelay=120000) //2분에 한번 호출
+    @Scheduled(fixedDelay=180000) //함수가 끝난후 3분뒤에 한번씩 호출
     public void createFullSearchInitial() throws IOException, InterruptedException {
         List<String> lolNamesList = LolNameToList.readLolNameTxt();
         GameRecord gameRecordEntity = GameRecord.builder().lolName(lolNamesList.get(lolNameCount++)).build();
         GameRecord gameRecord = gameRecordRepository.save(gameRecordEntity);
 
         produceFullSearch(gameRecord.getLolName());
+        Thread.sleep(10000);
         produceLineInfo(gameRecord.getLolName());
+        Thread.sleep(30000);
         produceMostChampion(gameRecord.getLolName());
+        Thread.sleep(30000);
         produceUserInfo(gameRecord.getLolName());
-
+        Thread.sleep(30000);
     }
 
 

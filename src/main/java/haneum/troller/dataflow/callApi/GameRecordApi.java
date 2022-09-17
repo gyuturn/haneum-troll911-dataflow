@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 public class GameRecordApi {
 
     public static String fullRecordGameRecord(String lolName){
-        String addUrl = "/dataflow/user/mostMachineLearning"+"?lolName="+lolName;
+        String addUrl = "/dataflow/user/gameRecordMachineLearning"+"?lolName="+lolName;
         ResponseEntity responseEntity = CallApi.GetIncludeParameter(addUrl);
         return responseEntity.getBody().toString();
     }
@@ -24,7 +24,7 @@ public class GameRecordApi {
     }
 
     public static String mostChampion(String lolName){
-        String addUrl = "/dataflow/user/gameRecordMachineLearning"+"?lolName="+lolName;
+        String addUrl = "/dataflow/user/mostMachineLearning"+"?lolName="+lolName;
         ResponseEntity responseEntity = CallApi.GetIncludeParameter(addUrl);
         return responseEntity.getBody().toString();
     }
