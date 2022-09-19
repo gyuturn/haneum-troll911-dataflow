@@ -38,6 +38,8 @@ public class GameRecord extends BaseTimeEntity {
     @Lob
     private String userInfo;
 
+
+
     @CreatedDate
     private LocalDateTime createDate;
 
