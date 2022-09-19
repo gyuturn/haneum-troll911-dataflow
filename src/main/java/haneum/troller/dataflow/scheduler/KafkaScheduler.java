@@ -71,11 +71,11 @@ public class KafkaScheduler {
         produceFullSearch(gameRecord.getLolName());
         Thread.sleep(10000);
         produceLineInfo(gameRecord.getLolName());
-        Thread.sleep(30000);
+        Thread.sleep(10000);
         produceMostChampion(gameRecord.getLolName());
-        Thread.sleep(30000);
+        Thread.sleep(10000);
         produceUserInfo(gameRecord.getLolName());
-        Thread.sleep(30000);
+        Thread.sleep(10000);
     }
 
 
