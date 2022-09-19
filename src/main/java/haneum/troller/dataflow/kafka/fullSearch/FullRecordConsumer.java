@@ -55,20 +55,29 @@ public class FullRecordConsumer {
         for (int i = 0; i < gameRecord.size(); i++) {
             JSONObject perGameRecord = (JSONObject) gameRecord.get(i);
 
+            //playtime
             String playtime = perGameRecord.get("playtime").toString();
             String playTimeMinutes = playtime.substring(0, playtime.indexOf("분"));
 
+            //win
             Integer win=1;
             if (perGameRecord.get("win").toString() == "false") win=0;
 
+
+            //hitdamage
             Long hitDamageToChampion = (Long) perGameRecord.get("hitDamageToChampion");
             double hitDamage = (double) hitDamageToChampion / 1000;
+
+            //kda
+            String kda = (String) perGameRecord.get("kda");
+            if (kda == "perfect") kda = "10.0";
+
 
 
             RecordML recordML = RecordML.builder()
                     .lolName(key)
                     .csPerMinute(Double.valueOf((String)perGameRecord.get("csPerMinutes")))
-                    .kda(Double.valueOf((String) perGameRecord.get("kda")))
+                    .kda(Double.valueOf(kda))
                     .win(win)
                     .playTime(Integer.valueOf(playTimeMinutes))
                     .matchId((String) perGameRecord.get("matchId"))
