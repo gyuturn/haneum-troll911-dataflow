@@ -11,6 +11,12 @@ public class GameRecordApi {
         return responseEntity.getBody().toString();
     }
 
+    public static String fullRecordGameRecordRank(String lolName){
+        String addUrl = "/dataflow/user/gameRecordMachineLearning"+"?lolName="+lolName+"&gameNumber=20&type=true";
+        ResponseEntity responseEntity = CallApi.GetIncludeParameter(addUrl);
+        return responseEntity.getBody().toString();
+    }
+
     public static String lineInfo(String lolName){
         String addUrl = "/dataflow/user/lineMachineLearning"+"?lolName="+lolName;
         ResponseEntity responseEntity = CallApi.GetIncludeParameter(addUrl);

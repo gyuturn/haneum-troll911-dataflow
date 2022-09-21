@@ -39,6 +39,12 @@ public class KafkaScheduler {
             fullRecordProducer.sendFullRecordJson(lolName,fullGameRecord);
     }
 
+    public void produceFullSearchRank(String lolName) throws IOException, InterruptedException {
+        String encodedLolName = URLEncoder.encode(lolName, "utf-8");
+        String fullGameRecord = GameRecordApi.fullRecordGameRecordRank(encodedLolName);
+        fullRecordProducer.sendFullRecordJson(lolName,fullGameRecord);
+    }
+
     public void produceLineInfo(String lolName) throws IOException{
         String encodedLolName = URLEncoder.encode(lolName, "utf-8");
         String lineInfo = GameRecordApi.lineInfo(encodedLolName);
@@ -68,14 +74,15 @@ public class KafkaScheduler {
         GameRecord gameRecordEntity = GameRecord.builder().lolName(lolNamesList.get(lolNameCount++)).build();
         GameRecord gameRecord = gameRecordRepository.save(gameRecordEntity);
 
-        produceFullSearch(gameRecord.getLolName());
+        produceUserInfo(gameRecord.getLolName());
         Thread.sleep(10000);
         produceLineInfo(gameRecord.getLolName());
         Thread.sleep(10000);
         produceMostChampion(gameRecord.getLolName());
         Thread.sleep(10000);
-        produceUserInfo(gameRecord.getLolName());
-        Thread.sleep(10000);
+        produceFullSearch(gameRecord.getLolName());
+        Thread.sleep(30000);
+        produceFullSearchRank(gameRecord.getLolName());
     }
 
 

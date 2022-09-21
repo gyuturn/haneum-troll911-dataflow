@@ -16,7 +16,7 @@ spring:
       enabled: always
 
   kafka:
-    bootstrap-servers: 13.209.92.240:9092
+    bootstrap-servers: 52.79.58.170:9092
     consumer:
       # consumer bootstrap servers가 따로 존재하면 설정
       # bootstrap-servers: 3.34.97.97:9092
