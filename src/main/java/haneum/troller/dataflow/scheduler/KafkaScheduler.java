@@ -3,6 +3,7 @@ package haneum.troller.dataflow.scheduler;
 import haneum.troller.dataflow.callApi.GameRecordApi;
 import haneum.troller.dataflow.domain.GameRecord;
 import haneum.troller.dataflow.kafka.fullSearch.FullRecordProducer;
+import haneum.troller.dataflow.kafka.fullSearchRank.RankProducer;
 import haneum.troller.dataflow.kafka.lineInfo.LineInfoProducer;
 import haneum.troller.dataflow.kafka.mostChampion.MostChampionProducer;
 import haneum.troller.dataflow.kafka.userInfo.UserInfoProducer;
@@ -27,6 +28,8 @@ public class KafkaScheduler {
     public UserInfoProducer userInfoProducer;
     @Autowired
     public MostChampionProducer mostChampionProducer;
+    @Autowired
+    public RankProducer rankProducer;
 
     @Autowired
     public GameRecordRepository gameRecordRepository;
@@ -42,7 +45,7 @@ public class KafkaScheduler {
     public void produceFullSearchRank(String lolName) throws IOException, InterruptedException {
         String encodedLolName = URLEncoder.encode(lolName, "utf-8");
         String fullGameRecord = GameRecordApi.fullRecordGameRecordRank(encodedLolName);
-        fullRecordProducer.sendFullRecordJson(lolName,fullGameRecord);
+        rankProducer.sendFullRecordJson(lolName,fullGameRecord);
     }
 
     public void produceLineInfo(String lolName) throws IOException{
