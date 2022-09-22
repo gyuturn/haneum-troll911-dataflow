@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "user_info")
-public class UserInfo extends BaseTimeEntity {
+public class UserInfo  {
     @Id
-    private String lolName;
+    private String name;
     private String encryptedLolName;
     private String tier;
     private String ranking;
@@ -28,18 +28,18 @@ public class UserInfo extends BaseTimeEntity {
     private String level;
     private String trollPossibility;
 
-    @CreatedDate
-    private LocalDateTime createDate;
-
-    @LastModifiedDate
-    private LocalDateTime modifiedDate;
+//    @CreatedDate
+//    private LocalDateTime createDate;
+//
+//    @LastModifiedDate
+//    private LocalDateTime modifiedDate;
 
     @Builder
-    public UserInfo(String lolName, String encryptedLolName, String tier, String rank, String point, String winRate, String win, String lose, String icon, String level, String trollPossibility, LocalDateTime createDate, LocalDateTime modifiedDate) {
-        this.lolName = lolName;
+    public UserInfo(String name, String encryptedLolName, String tier, String ranking, String point, String winRate, String win, String lose, String icon, String level, String trollPossibility, LocalDateTime createDate, LocalDateTime modifiedDate) {
+        this.name = name;
         this.encryptedLolName = encryptedLolName;
         this.tier = tier;
-        this.ranking = rank;
+        this.ranking = ranking;
         this.point = point;
         this.winRate = winRate;
         this.win = win;
@@ -47,25 +47,9 @@ public class UserInfo extends BaseTimeEntity {
         this.icon = icon;
         this.level = level;
         this.trollPossibility = trollPossibility;
-        this.createDate = createDate;
-        this.modifiedDate = modifiedDate;
     }
 
-    public UserInfo updateUserInfo(String lolName, String encryptedLolName, String tier, String rank, String point, String winRate, String win, String lose, String icon, String level, String trollPossibility) {
-        this.lolName = lolName;
-        this.encryptedLolName = encryptedLolName;
-        this.tier = tier;
-        this.ranking = rank;
-        this.point = point;
-        this.winRate = winRate;
-        this.win = win;
-        this.lose = lose;
-        this.icon = icon;
-        this.level = level;
-        this.trollPossibility = trollPossibility;
 
-        return this;
-    }
 
 
 

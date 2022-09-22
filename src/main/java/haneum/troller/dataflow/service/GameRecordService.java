@@ -21,8 +21,23 @@ public class GameRecordService {
     }
 
     @Transactional(readOnly = false)
+    public GameRecord updateLineInfoRank(GameRecord gameRecord,String lineInfoRank) {
+        gameRecord.updateLineInfoRank(lineInfoRank);
+        gameRecordRepository.save(gameRecord);
+        return gameRecord;
+    }
+
+    @Transactional(readOnly = false)
     public GameRecord updateFullRecord(GameRecord gameRecord,String fullRecord) {
         gameRecord.updateFullRecord(fullRecord);
+        gameRecordRepository.save(gameRecord);
+        return  gameRecord;
+    }
+
+
+    @Transactional(readOnly = false)
+    public GameRecord updateFullRecordRank(GameRecord gameRecord,String fullRecordRank) {
+        gameRecord.updateFullRecordRank(fullRecordRank);
         gameRecordRepository.save(gameRecord);
         return  gameRecord;
     }
@@ -30,6 +45,13 @@ public class GameRecordService {
     @Transactional(readOnly = false)
     public GameRecord updateMostChampion(GameRecord gameRecord,String mostChampion) {
         gameRecord.updateMostChampion(mostChampion);
+        gameRecordRepository.save(gameRecord);
+        return gameRecord;
+    }
+
+    @Transactional(readOnly = false)
+    public GameRecord updateMostChampionRank(GameRecord gameRecord,String updateMostChampionRank) {
+        gameRecord.updateMostChampionRank(updateMostChampionRank);
         gameRecordRepository.save(gameRecord);
         return gameRecord;
     }

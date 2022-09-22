@@ -6,12 +6,12 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RankProducer {
-    private static final String TOPIC = "rank_record";
+public class FullRecordRankProducer {
+    private static final String TOPIC = "full_record_rank";
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
-    public RankProducer(KafkaTemplate kafkaTemplate) {
+    public FullRecordRankProducer(KafkaTemplate kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 

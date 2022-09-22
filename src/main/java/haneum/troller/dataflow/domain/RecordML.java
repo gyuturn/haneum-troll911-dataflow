@@ -27,9 +27,9 @@ public class RecordML extends BaseTimeEntity {
 
     private  Integer win;
 
-    private Double kda;
+    private String kda;
 
-    private Double csPerMinute;
+    private String csPerMinute;
 
     private Integer playTime;
 
@@ -41,7 +41,7 @@ public class RecordML extends BaseTimeEntity {
 
 
     @Builder
-    public RecordML(String lolName, Double hitDamage, Integer win, Double kda, Double csPerMinute, Integer playTime, String matchId,String gameMode) {
+    public RecordML(String lolName, Double hitDamage, Integer win, String kda, String csPerMinute, Integer playTime, String matchId,String gameMode) {
         this.lolName = lolName;
         this.hitDamage = hitDamage;
         this.win = win;
