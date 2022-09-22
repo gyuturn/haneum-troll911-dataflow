@@ -38,49 +38,49 @@ public class UserInfoConsumer {
         gameRecordService.updateUserInfo(gameRecord,data);
     }
 
-//    @KafkaListener(topics = "user_info", groupId = "user_info_con_grp_entity")
-//    public void consumeToEntity(@Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
-//                                @Payload String data) throws JSONException {
-//        JSONObject jsonObject = new JSONObject(data);
-//
-//
-//        Optional<UserInfo> userInfoById = userInfoRepository.findById(key);
-//        if (userInfoById.isEmpty()) {
-//            log.info("userConsumer - userInfo 새로 저장 - db에 존재하지 않음");
-//            log.info("저장 유저:{}", key);
-//            UserInfo userInfo = UserInfo.builder()
-//                    .encryptedLolName(jsonObject.getString("encryptedLolName"))
-//                    .icon(jsonObject.getString("icon"))
-//                    .level(jsonObject.getString("level"))
-//                    .name(jsonObject.getString("name"))
-//                    .lose(jsonObject.getString("lose"))
-//                    .point(jsonObject.getString("point"))
-//                    .ranking(jsonObject.getString("rank"))
-//                    .tier(jsonObject.getString("tier"))
-//                    .win(jsonObject.getString("win"))
-//                    .winRate(jsonObject.getString("winRate"))
-//                    .trollPossibility(jsonObject.getString("trollPossibility"))
-//                    .build();
-//
-//            userInfoRepository.save(userInfo);
-//        }
-//        else{
-//            log.info("userConsumer - userInfo Update");
-//            log.info("Updated 유저:{}", key);
-//            UserInfo userInfo = userInfoById.get().updateUserInfo(
-//                    jsonObject.getString("name"),
-//                    jsonObject.getString("encryptedLolName"),
-//                    jsonObject.getString("tier"),
-//                    jsonObject.getString("rank"),
-//                    jsonObject.getString("point"),
-//                    jsonObject.getString("winRate"),
-//                    jsonObject.getString("win"),
-//                    jsonObject.getString("lose"),
-//                    jsonObject.getString("icon"),
-//                    jsonObject.getString("level"),
-//                    jsonObject.getString("trollPossibility")
-//            );
-//            userInfoRepository.save(userInfo);
-//        }
-//    }
+    @KafkaListener(topics = "user_info", groupId = "user_info_con_grp_entity")
+    public void consumeToEntity(@Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
+                                @Payload String data) throws JSONException {
+        JSONObject jsonObject = new JSONObject(data);
+
+
+        Optional<UserInfo> userInfoById = userInfoRepository.findById(key);
+        if (userInfoById.isEmpty()) {
+            log.info("userConsumer - userInfo 새로 저장 - db에 존재하지 않음");
+            log.info("저장 유저:{}", key);
+            UserInfo userInfo = UserInfo.builder()
+                    .encryptedLolName(jsonObject.getString("encryptedLolName"))
+                    .icon(jsonObject.getString("icon"))
+                    .level(jsonObject.getString("level"))
+                    .lolName(jsonObject.getString("name"))
+                    .lose(jsonObject.getString("lose"))
+                    .point(jsonObject.getString("point"))
+                    .rank(jsonObject.getString("rank"))
+                    .tier(jsonObject.getString("tier"))
+                    .win(jsonObject.getString("win"))
+                    .winRate(jsonObject.getString("winRate"))
+                    .trollPossibility(jsonObject.getString("trollPossibility"))
+                    .build();
+
+            userInfoRepository.save(userInfo);
+        }
+        else{
+            log.info("userConsumer - userInfo Update");
+            log.info("Updated 유저:{}", key);
+            UserInfo userInfo = userInfoById.get().updateUserInfo(
+                    jsonObject.getString("name"),
+                    jsonObject.getString("encryptedLolName"),
+                    jsonObject.getString("tier"),
+                    jsonObject.getString("rank"),
+                    jsonObject.getString("point"),
+                    jsonObject.getString("winRate"),
+                    jsonObject.getString("win"),
+                    jsonObject.getString("lose"),
+                    jsonObject.getString("icon"),
+                    jsonObject.getString("level"),
+                    jsonObject.getString("trollPossibility")
+            );
+            userInfoRepository.save(userInfo);
+        }
+    }
 }
