@@ -1,4 +1,4 @@
-package haneum.troller.dataflow.kafka.lineInfo;
+package haneum.troller.dataflow.kafka.fullSearchRank;
 
 import haneum.troller.dataflow.domain.GameRecord;
 import haneum.troller.dataflow.repository.GameRecordRepository;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class LineInfoConsumer {
+public class FullRecordRankConsumer {
     @Autowired
     public GameRecordRepository gameRecordRepository;
     @Autowired
@@ -21,10 +21,10 @@ public class LineInfoConsumer {
 
 
 
-    @KafkaListener(topics = "line_info", groupId = "line_info_con_grp")
+    @KafkaListener(topics = "full_record_rank", groupId = "full_record_rank_con_grp")
     public void lineInfoConsume( @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
-                         @Payload String data) throws IOException {
+                                 @Payload String data) throws IOException {
         GameRecord gameRecord = gameRecordRepository.findById(key).get();
-        gameRecordService.updateLineInfo(gameRecord,data);
+        gameRecordService.updateFullRecordRank(gameRecord,data);
     }
 }

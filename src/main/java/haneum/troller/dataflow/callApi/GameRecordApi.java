@@ -12,7 +12,7 @@ public class GameRecordApi {
     }
 
     public static String fullRecordGameRecordRank(String lolName){
-        String addUrl = "/dataflow/user/gameRecordMachineLearning"+"?lolName="+lolName+"&gameNumber=20&type=true";
+        String addUrl = "/dataflow/user/gameRecordMachineLearning"+"?lolName="+lolName+"&count=20&type=true";
         ResponseEntity responseEntity = CallApi.GetIncludeParameter(addUrl);
         return responseEntity.getBody().toString();
     }
@@ -23,8 +23,8 @@ public class GameRecordApi {
         return responseEntity.getBody().toString();
     }
 
-    public static String userInfo(String lolName){
-        String addUrl = "/dataflow/user/infoMachineLearning"+"?lolName="+lolName;
+    public static String lineInfoRank(String lolName){
+        String addUrl = "/dataflow/user/lineMachineLearning"+"?lolName="+lolName+"&count=20&type=true";
         ResponseEntity responseEntity = CallApi.GetIncludeParameter(addUrl);
         return responseEntity.getBody().toString();
     }
@@ -34,5 +34,19 @@ public class GameRecordApi {
         ResponseEntity responseEntity = CallApi.GetIncludeParameter(addUrl);
         return responseEntity.getBody().toString();
     }
+
+    public static String mostChampionRank(String lolName){
+        String addUrl = "/dataflow/user/mostMachineLearning"+"?lolName="+lolName+"&count=20&type=true";
+        ResponseEntity responseEntity = CallApi.GetIncludeParameter(addUrl);
+        return responseEntity.getBody().toString();
+    }
+
+    public static String userInfo(String lolName){
+        String addUrl = "/dataflow/user/infoMachineLearning"+"?lolName="+lolName;
+        ResponseEntity responseEntity = CallApi.GetIncludeParameter(addUrl);
+        return responseEntity.getBody().toString();
+    }
+
+
 
 }
