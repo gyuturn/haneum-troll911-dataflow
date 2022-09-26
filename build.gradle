@@ -38,6 +38,9 @@ dependencies {
 
 	//s3
 	implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.12.303'
+
+	//swagger
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
 }
 
 tasks.named('test') {
