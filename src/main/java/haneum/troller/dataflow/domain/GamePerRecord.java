@@ -39,12 +39,19 @@ public class GamePerRecord {
     private String semiRune;
     private String visionWard;
 
+//
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<Players> players;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @Convert(converter = StringListConverter.class)
+    @Column(columnDefinition = "json")
     private List<Players> players;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @Convert(converter = StringListConverter.class)
+    @Column(columnDefinition = "json")
     private List<Item> itemArray;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<Item> itemArray;
 
 
     private String kda;
@@ -100,9 +107,7 @@ public class GamePerRecord {
         this.gameMode = gameMode;
     }
 
-//    @Convert(converter = StringListConverter.class)
-//    @Column(columnDefinition = "json")
-//    private List<String> itemArray;
+
 
 
 
