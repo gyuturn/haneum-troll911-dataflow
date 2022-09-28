@@ -1,4 +1,4 @@
-package haneum.troller.dataflow.api.signup;
+package haneum.troller.dataflow.api.updateRecord;
 
 
 import haneum.troller.dataflow.dto.MemberDto;
@@ -26,12 +26,11 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class SignUpApi {
+public class UpdateGameRecord {
     @Autowired
     public KafkaScheduler kafkaScheduler;
 
-    @Operation(summary = "멤버 등록 api", description = "모든 인증절차를 마치고 최종적으로 회원을 등록하는 기능" +
-            "http status:201이 정상 등록")
+    @Operation(summary = "멤버 등록 api", description = "회원가입시에는 새로 등록/ 로그인 및 전적갱신시에는 update로 기능 구현 (consumer에서)")
     @PostMapping("register")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "CREATED"),
@@ -45,7 +44,7 @@ public class SignUpApi {
                     @Parameter(name = "lolName", description = "롤 이름")
             }
     )
-    public ResponseEntity signUpDataflow(@RequestBody MemberDto memberDto) throws IOException, InterruptedException {
+    public ResponseEntity updateGameRecord(@RequestBody MemberDto memberDto) throws IOException, InterruptedException {
 
         String lolName = memberDto.getLolName();
 
