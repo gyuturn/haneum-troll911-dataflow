@@ -44,6 +44,8 @@ dependencies {
 
 	//tensorflow
 	implementation group: 'org.tensorflow', name: 'tensorflow', version: '1.15.0'
+// https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-csv
+	implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.11.1'
 }
 
 tasks.named('test') {

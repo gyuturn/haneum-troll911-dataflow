@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @Tag(name="SignUp",description = "회원가입시에 유저전적 정보 저장 및 정보로 머신러닝 진행")
-@RequestMapping("/api/dataflow/sign-up/")
+@RequestMapping("/api/dataflow/update/")
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -30,20 +30,13 @@ public class UpdateGameRecord {
     @Autowired
     public KafkaScheduler kafkaScheduler;
 
-    @Operation(summary = "멤버 등록 api", description = "회원가입시에는 새로 등록/ 로그인 및 전적갱신시에는 update로 기능 구현 (consumer에서)")
-    @PostMapping("register")
+    @Operation(summary = "전적갱신 api", description = "회원가입시에는 새로 유저전적 등록/ 로그인 및 전적갱신시에는 update로 기능 구현 (consumer에서)")
+    @PostMapping("record")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "CREATED"),
             @ApiResponse(responseCode = "400", description = "서버에서 해당 parameter를 binding하지 못함" +
                     "오타 체크")
     })
-    @Parameters(
-            {
-                    @Parameter(name = "email", description = "이메일"),
-                    @Parameter(name = "password", description = "비번"),
-                    @Parameter(name = "lolName", description = "롤 이름")
-            }
-    )
     public ResponseEntity updateGameRecord(@RequestBody MemberDto memberDto) throws IOException, InterruptedException {
 
         String lolName = memberDto.getLolName();
