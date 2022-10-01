@@ -9,7 +9,7 @@ import java.net.URI;
 
 public class CallApi {
 
-    public static ResponseEntity PostIncludeObject(String addUrl,String jsonToString){
+    public static ResponseEntity PostIncludeObject(String ApiEnvURl,String addUrl,String jsonToString){
         //ResTemplate 생성
         RestTemplate restTemplate = new RestTemplate();
 
@@ -19,7 +19,7 @@ public class CallApi {
         headers.add("Content-Type", "application/json;charset=UTF-8");
 
         //url 생성
-        URI url = URI.create(ApiEnv.URL+addUrl);
+        URI url = URI.create(ApiEnvURl+addUrl);
 
         //POST로 보내는 경우 : body에 실어보낼 json데이터 생성
         HttpEntity<String> entity = new HttpEntity<>(jsonToString, headers);
@@ -40,7 +40,7 @@ public class CallApi {
         URI url = URI.create(ApiEnv.URL+addUrl);
 
         //GET으로 보내는 경우 : 쿼리파라미터는 url에 붙여 보내면 댐
-        System.out.println("url = " + url);
+
         RequestEntity<String> req = new RequestEntity<>(headers, HttpMethod.GET, url);
         return restTemplate.exchange(req, String.class);
     }
