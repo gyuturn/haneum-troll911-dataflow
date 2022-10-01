@@ -45,7 +45,6 @@ public class LolNameToList {
         List<String> lolNames = new ArrayList<>();
         while ((lolName = bufferedReader.readLine()) != null) {
             lolNames.add(lolName);
-            System.out.println("lolName = " + lolName);
         }
         bufferedReader.close();
 

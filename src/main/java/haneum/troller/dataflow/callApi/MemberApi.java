@@ -2,6 +2,7 @@ package haneum.troller.dataflow.callApi;
 
 import com.google.gson.Gson;
 import haneum.troller.dataflow.common.Apimethod.CallApi;
+import haneum.troller.dataflow.common.env.ApiEnv;
 import haneum.troller.dataflow.dto.DateDto;
 import org.json.simple.JSONObject;
 import org.springframework.http.*;
@@ -31,7 +32,7 @@ public class MemberApi {
                 .second(now.getSecond())
                 .build());
 
-        ResponseEntity responseEntity = CallApi.PostIncludeObject(addUrl, jsonToString);
+        ResponseEntity responseEntity = CallApi.PostIncludeObject(ApiEnv.URL,addUrl, jsonToString);
 
         List<Long> membersId = new ArrayList<Long>();
         System.out.println(responseEntity.getBody());

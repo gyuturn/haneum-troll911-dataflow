@@ -67,6 +67,11 @@ public class UserInfo extends BaseTimeEntity {
         return this;
     }
 
+    public UserInfo updateTrollPossibility(String trollPossibility) {
+        this.trollPossibility = trollPossibility;
+        return this;
+    }
+
 
 
 
