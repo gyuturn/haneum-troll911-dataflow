@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter
 @Schema
 @Builder
-public class MemberDto {
-    public Long memberId;
+public class LolNameDto {
     public String lolName;
 }
