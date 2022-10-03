@@ -35,7 +35,7 @@ public class RegressionService {
         List<GamePerRecord> gamePerRecords = gamePerRecordRepository.findByNameAndGameModeOrderByGameStartTimeStampDesc(lolName,"CLASSIC");
 
         int listSize = gamePerRecords.size();
-        if (gamePerRecords.size() >= 10) {
+        if (listSize >= 10) {
             listSize = 10;
         }
 

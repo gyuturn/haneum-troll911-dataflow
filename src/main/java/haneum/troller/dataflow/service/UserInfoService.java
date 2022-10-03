@@ -8,6 +8,7 @@ import haneum.troller.dataflow.repository.UserInfoRepository;
 import haneum.troller.dataflow.service.ml.RegressionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Time;
 import org.json.JSONException;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +21,14 @@ public class UserInfoService {
     private final UserInfoRepository userInfoRepository;
     private final RegressionService regressionService;
 
-    public void updateTrollPossibility(GameRecord gameRecord) throws JSONException, JsonProcessingException {
+    public void updateTrollPossibility(GameRecord gameRecord) throws JSONException, JsonProcessingException, InterruptedException {
         UserInfo userInfo = userInfoRepository.findById(gameRecord.getLolName()).get();
         String lolName = userInfo.getLolName();
         List<RegressionDto> regressionDtoList = regressionService.makeRegressionDtoList(lolName);
         Double sumTrollPossibility = Double.valueOf(0);
         for (RegressionDto regressionDto : regressionDtoList) {
             Double trollPossibility = Double.valueOf(regressionService.callFlaskApi(regressionDto));
+            Thread.sleep(5000);
             log.info("한판당 트롤확률:{}", trollPossibility);
             sumTrollPossibility += trollPossibility;
         }
