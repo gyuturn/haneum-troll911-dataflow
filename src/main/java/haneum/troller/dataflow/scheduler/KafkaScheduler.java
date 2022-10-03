@@ -14,6 +14,7 @@ import haneum.troller.dataflow.kafka.mostChampionRank.MostChampionRankProducer;
 import haneum.troller.dataflow.kafka.userInfo.UserInfoProducer;
 import haneum.troller.dataflow.repository.GameRecordRepository;
 import haneum.troller.dataflow.repository.UserInfoRepository;
+import haneum.troller.dataflow.service.KafkaService;
 import haneum.troller.dataflow.service.LolNameToList;
 import haneum.troller.dataflow.service.UserInfoService;
 import haneum.troller.dataflow.service.ml.RegressionService;
@@ -33,6 +34,9 @@ import java.util.Optional;
 public class KafkaScheduler {
     @Autowired
     public UserInfoService userInfoService;
+
+    @Autowired
+    public KafkaService kafkaService;
 
     @Autowired
     public FullRecordProducer fullRecordProducer;
@@ -144,28 +148,9 @@ public class KafkaScheduler {
         List<String> lolNamesList = LolNameToList.readLolNameTxt();
         GameRecord gameRecordEntity = GameRecord.builder().lolName(lolNamesList.get(lolNameCount++)).build();
         GameRecord gameRecord = gameRecordRepository.save(gameRecordEntity);
+        String lolName = gameRecord.getLolName();
 
-        produceUserInfo(gameRecord.getLolName());
-        Thread.sleep(20000);
-
-        produceLineInfo(gameRecord.getLolName());
-        Thread.sleep(20000);
-//        produceLineInfoRank(gameRecord.getLolName());
-//        Thread.sleep(20000);
-
-        produceMostChampion(gameRecord.getLolName());
-        Thread.sleep(20000);
-//        produceMostChampionRank(gameRecord.getLolName());
-//        Thread.sleep(20000);
-
-        produceFullSearch(gameRecord.getLolName());
-        Thread.sleep(30000);
-//        produceFullSearchRank(gameRecord.getLolName());
-
-        /**
-         * 머신러닝 적용
-         */
-        userInfoService.updateTrollPossibility(gameRecord);
+        kafkaService.produceGameRecordAndML(lolName,gameRecord);
 
     }
 
