@@ -27,6 +27,7 @@ public class UserInfoService {
         Double sumTrollPossibility = Double.valueOf(0);
         for (RegressionDto regressionDto : regressionDtoList) {
             Double trollPossibility = Double.valueOf(regressionService.callFlaskApi(regressionDto));
+            log.info("한판당 트롤확률:{}", trollPossibility);
             sumTrollPossibility += trollPossibility;
         }
         sumTrollPossibility = sumTrollPossibility / regressionDtoList.size();
