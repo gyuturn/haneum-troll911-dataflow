@@ -110,5 +110,4 @@ public class GameRecord extends BaseTimeEntity {
     }
 
 
-
 }

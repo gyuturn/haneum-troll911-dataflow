@@ -1,15 +1,12 @@
 package haneum.troller.dataflow.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Schema
-@Builder
-public class MemberDto {
-    public Long memberId;
+@NoArgsConstructor
+public class LolNameDto {
     public String lolName;
 }

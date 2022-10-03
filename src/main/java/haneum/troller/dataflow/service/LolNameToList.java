@@ -34,7 +34,7 @@ public class LolNameToList {
         headers.add("Content-Type", "application/json;charset=UTF-8");
 
         //url 생성
-        URI url = URI.create("https://troller-bucket.s3.ap-northeast-2.amazonaws.com/mixLolnameV2.txt");
+        URI url = URI.create("https://troller-bucket.s3.ap-northeast-2.amazonaws.com/mixLolnameV3.txt");
         RequestEntity<String> req = new RequestEntity<>(headers, HttpMethod.GET, url);
         String body = restTemplate.exchange(req, String.class).getBody();
         URLEncoder.encode(body, "utf-8");

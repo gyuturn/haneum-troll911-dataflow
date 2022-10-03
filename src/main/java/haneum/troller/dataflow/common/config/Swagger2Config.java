@@ -13,8 +13,8 @@ public class Swagger2Config {
     @Bean
     public GroupedOpenApi SignUpApi() {
         return GroupedOpenApi.builder()
-                .group("signUp-dataflow")
-                .pathsToMatch("/api/dataflow/sign-up/**")
+                .group("userRecord-dataflow")
+                .pathsToMatch("/api/dataflow/record/**")
                 .build();
     }
 

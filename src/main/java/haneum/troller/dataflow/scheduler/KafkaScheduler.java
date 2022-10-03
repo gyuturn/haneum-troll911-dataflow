@@ -14,6 +14,7 @@ import haneum.troller.dataflow.kafka.mostChampionRank.MostChampionRankProducer;
 import haneum.troller.dataflow.kafka.userInfo.UserInfoProducer;
 import haneum.troller.dataflow.repository.GameRecordRepository;
 import haneum.troller.dataflow.repository.UserInfoRepository;
+import haneum.troller.dataflow.service.KafkaService;
 import haneum.troller.dataflow.service.LolNameToList;
 import haneum.troller.dataflow.service.UserInfoService;
 import haneum.troller.dataflow.service.ml.RegressionService;
@@ -31,77 +32,15 @@ import java.util.Optional;
 @Component
 @Slf4j
 public class KafkaScheduler {
-    @Autowired
-    public UserInfoService userInfoService;
 
     @Autowired
-    public FullRecordProducer fullRecordProducer;
-    @Autowired
-    public FullRecordRankProducer fullRecordRankProducer;
-    @Autowired
-    public LineInfoProducer lineInfoProducer;
-    @Autowired
-    public LineInfoRankProducer lineInfoRankProducer;
-    @Autowired
-    public UserInfoProducer userInfoProducer;
-    @Autowired
-    public MostChampionProducer mostChampionProducer;
-    @Autowired
-    public MostChampionRankProducer mostChampionRankProducer;
-
-    @Autowired
-    public RegressionService regressionService;
-
-    @Autowired
-    public UserInfoRepository userInfoRepository;
-
+    public KafkaService kafkaService;
 
     @Autowired
     public GameRecordRepository gameRecordRepository;
 
 
 
-    public void produceFullSearch(String lolName) throws IOException, InterruptedException {
-            String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-            String fullGameRecord = GameRecordApi.fullRecordGameRecord(encodedLolName);
-            fullRecordProducer.sendFullRecordJson(lolName,fullGameRecord);
-    }
-
-    public void produceFullSearchRank(String lolName) throws IOException, InterruptedException {
-        String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-        String fullGameRecord = GameRecordApi.fullRecordGameRecordRank(encodedLolName);
-        fullRecordRankProducer.sendFullRecordJson(lolName,fullGameRecord);
-    }
-
-    public void produceLineInfo(String lolName) throws IOException{
-        String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-        String lineInfo = GameRecordApi.lineInfo(encodedLolName);
-        lineInfoProducer.sendLineInfo(lolName,lineInfo);
-    }
-
-    public void produceLineInfoRank(String lolName) throws IOException{
-        String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-        String lineInfo = GameRecordApi.lineInfoRank(encodedLolName);
-        lineInfoRankProducer.sendLineInfo(lolName,lineInfo);
-    }
-
-    public void produceUserInfo(String lolName) throws IOException{
-        String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-        String userInfo = GameRecordApi.userInfo(encodedLolName);
-        userInfoProducer.sendUserInfo(lolName,userInfo);
-    }
-
-    public void produceMostChampion(String lolName) throws IOException{
-        String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-        String mostChampion = GameRecordApi.mostChampion(encodedLolName);
-        mostChampionProducer.sendMostChampion(lolName,mostChampion);
-    }
-
-    public void produceMostChampionRank(String lolName) throws IOException{
-        String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-        String mostChampion = GameRecordApi.mostChampionRank(encodedLolName);
-        mostChampionRankProducer.sendMostChampion(lolName,mostChampion);
-    }
 
 
 
@@ -144,29 +83,9 @@ public class KafkaScheduler {
         List<String> lolNamesList = LolNameToList.readLolNameTxt();
         GameRecord gameRecordEntity = GameRecord.builder().lolName(lolNamesList.get(lolNameCount++)).build();
         GameRecord gameRecord = gameRecordRepository.save(gameRecordEntity);
+        String lolName = gameRecord.getLolName();
 
-        produceUserInfo(gameRecord.getLolName());
-        Thread.sleep(20000);
-
-        produceLineInfo(gameRecord.getLolName());
-        Thread.sleep(20000);
-//        produceLineInfoRank(gameRecord.getLolName());
-//        Thread.sleep(20000);
-
-        produceMostChampion(gameRecord.getLolName());
-        Thread.sleep(20000);
-//        produceMostChampionRank(gameRecord.getLolName());
-//        Thread.sleep(20000);
-
-        produceFullSearch(gameRecord.getLolName());
-        Thread.sleep(30000);
-//        produceFullSearchRank(gameRecord.getLolName());
-
-        /**
-         * 머신러닝 적용
-         */
-        userInfoService.updateTrollPossibility(gameRecord);
-
+        kafkaService.produceGameRecordAndML(lolName,gameRecord);
     }
 
 
