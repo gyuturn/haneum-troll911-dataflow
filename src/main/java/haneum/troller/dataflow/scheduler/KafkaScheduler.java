@@ -32,80 +32,15 @@ import java.util.Optional;
 @Component
 @Slf4j
 public class KafkaScheduler {
-    @Autowired
-    public UserInfoService userInfoService;
 
     @Autowired
     public KafkaService kafkaService;
-
-    @Autowired
-    public FullRecordProducer fullRecordProducer;
-    @Autowired
-    public FullRecordRankProducer fullRecordRankProducer;
-    @Autowired
-    public LineInfoProducer lineInfoProducer;
-    @Autowired
-    public LineInfoRankProducer lineInfoRankProducer;
-    @Autowired
-    public UserInfoProducer userInfoProducer;
-    @Autowired
-    public MostChampionProducer mostChampionProducer;
-    @Autowired
-    public MostChampionRankProducer mostChampionRankProducer;
-
-    @Autowired
-    public RegressionService regressionService;
-
-    @Autowired
-    public UserInfoRepository userInfoRepository;
-
 
     @Autowired
     public GameRecordRepository gameRecordRepository;
 
 
 
-    public void produceFullSearch(String lolName) throws IOException, InterruptedException {
-            String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-            String fullGameRecord = GameRecordApi.fullRecordGameRecord(encodedLolName);
-            fullRecordProducer.sendFullRecordJson(lolName,fullGameRecord);
-    }
-
-    public void produceFullSearchRank(String lolName) throws IOException, InterruptedException {
-        String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-        String fullGameRecord = GameRecordApi.fullRecordGameRecordRank(encodedLolName);
-        fullRecordRankProducer.sendFullRecordJson(lolName,fullGameRecord);
-    }
-
-    public void produceLineInfo(String lolName) throws IOException{
-        String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-        String lineInfo = GameRecordApi.lineInfo(encodedLolName);
-        lineInfoProducer.sendLineInfo(lolName,lineInfo);
-    }
-
-    public void produceLineInfoRank(String lolName) throws IOException{
-        String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-        String lineInfo = GameRecordApi.lineInfoRank(encodedLolName);
-        lineInfoRankProducer.sendLineInfo(lolName,lineInfo);
-    }
-
-    public void produceUserInfo(String lolName) throws IOException{
-        String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-        String userInfo = GameRecordApi.userInfo(encodedLolName);
-        userInfoProducer.sendUserInfo(lolName,userInfo);
-    }
-
-    public void produceMostChampion(String lolName) throws IOException{
-        String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-        String mostChampion = GameRecordApi.mostChampion(encodedLolName);
-        mostChampionProducer.sendMostChampion(lolName,mostChampion);
-    }
-
-    public void produceMostChampionRank(String lolName) throws IOException{
-        String encodedLolName = URLEncoder.encode(lolName, "utf-8");
-        String mostChampion = GameRecordApi.mostChampionRank(encodedLolName);
-        mostChampionRankProducer.sendMostChampion(lolName,mostChampion);
-    }
 
 
 
@@ -151,7 +86,6 @@ public class KafkaScheduler {
         String lolName = gameRecord.getLolName();
 
         kafkaService.produceGameRecordAndML(lolName,gameRecord);
-
     }
 
 
