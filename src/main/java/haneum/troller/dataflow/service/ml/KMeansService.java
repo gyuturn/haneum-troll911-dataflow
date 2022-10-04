@@ -25,6 +25,7 @@ public class KMeansService {
     public KMeansDto makeKMeansDto(String lolName) {
 
         UserInfo userInfo = userInfoRepository.findById(lolName).get();
+        log.info("kmeans 적용:{}",lolName);
 
 
         Tier tier = null;
@@ -60,13 +61,19 @@ public class KMeansService {
 
         return  KMeansDto.builder()
                 .tier(tier.ordinal())
-                .troll_possibility(userInfo.getTrollPossibility())
+                .troll_possibility(userInfo.getTrollPossibility().substring(0,3))
                 .build();
     }
 
     public Integer callFlaskApi(KMeansDto kMeansDto) throws JSONException, JsonProcessingException {
 
+        //예외처리
+        if (kMeansDto.getTroll_possibility().equals("NaN")) {
+            return -1;
+        }
+
         ObjectMapper objectMapper = new ObjectMapper();
+
 
         ResponseEntity regression = CallApi.PostIncludeObject(ApiEnv.FLASKURL, "kmeans", objectMapper.writeValueAsString(kMeansDto));
 

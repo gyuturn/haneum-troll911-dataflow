@@ -17,7 +17,9 @@ import haneum.troller.dataflow.repository.UserInfoRepository;
 import haneum.troller.dataflow.service.KafkaService;
 import haneum.troller.dataflow.service.LolNameToList;
 import haneum.troller.dataflow.service.UserInfoService;
+import haneum.troller.dataflow.service.ml.KMeansService;
 import haneum.troller.dataflow.service.ml.RegressionService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +28,64 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class KafkaScheduler {
+    private final KafkaService kafkaService;
+    private final GameRecordRepository gameRecordRepository;
 
-    @Autowired
-    public KafkaService kafkaService;
 
-    @Autowired
-    public GameRecordRepository gameRecordRepository;
+
+
+
+
+
+
+    /**
+     * 처음 초기 세팅시에만 사용
+     * 처음 db구성시 해당 함수를 통해 create, timestamp를 함께넣어 db에 저장(nifi??)
+     */
+    public static int lolNameCount=0;
+    @Scheduled(fixedDelay=180000) //함수가 끝난후 3분뒤에 한번씩 호출
+    public void createFullSearchInitial() throws IOException, InterruptedException, JSONException {
+        List<String> lolNamesList = LolNameToList.readLolNameTxt();
+        GameRecord gameRecordEntity = GameRecord.builder().lolName(lolNamesList.get(lolNameCount++)).build();
+        GameRecord gameRecord = gameRecordRepository.save(gameRecordEntity);
+        String lolName = gameRecord.getLolName();
+
+        kafkaService.produceGameRecordAndML(lolName,gameRecord);
+
+    }
+
+
+    /**
+     * 트롤확률 및 cluster 업데이트용
+     * 매일 자정마다 주기적 업데이트
+     */
+//    private final UserInfoRepository userInfoRepository;
+//    private final UserInfoService userInfoService;
+////    @Scheduled(cron = "0 0 0 * * *")
+//    @Scheduled(fixedDelay=1000)
+//    public void fixTrollAndCluster() throws JSONException, JsonProcessingException, InterruptedException {
+////        List<String> troll = new ArrayList<>();
+////        troll.add("NaN");
+////        troll.add("0");
+//        List<UserInfo> userInfoList = userInfoRepository.findByClusterNull();
+//
+//        System.out.println("userInfoList.size = " + userInfoList.size());
+//
+//        for (UserInfo userInfo : userInfoList) {
+//            if(userInfo.getTrollPossibility().equals("0")||userInfo.getTrollPossibility().equals("NaN")) continue;
+//            userInfoService.updateCluster(userInfo.getLolName());
+//        }
+//    }
+
+
 
 
 
@@ -71,24 +119,6 @@ public class KafkaScheduler {
 //        UserInfo userInfoUpdatedTrollPossibility = userInfo.updateTrollPossibility(String.valueOf(sumTrollPossibility));
 //        userInfoRepository.save(userInfoUpdatedTrollPossibility);
 //    }
-
-
-    /**
-     * 처음 초기 세팅시에만 사용
-     * 처음 db구성시 해당 함수를 통해 create, timestamp를 함께넣어 db에 저장(nifi??)
-     */
-    public static int lolNameCount=0;
-    @Scheduled(fixedDelay=180000) //함수가 끝난후 3분뒤에 한번씩 호출
-    public void createFullSearchInitial() throws IOException, InterruptedException, JSONException {
-        List<String> lolNamesList = LolNameToList.readLolNameTxt();
-        GameRecord gameRecordEntity = GameRecord.builder().lolName(lolNamesList.get(lolNameCount++)).build();
-        GameRecord gameRecord = gameRecordRepository.save(gameRecordEntity);
-        String lolName = gameRecord.getLolName();
-
-        kafkaService.produceGameRecordAndML(lolName,gameRecord);
-    }
-
-
 
 
 }
