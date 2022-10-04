@@ -37,10 +37,14 @@ public class KafkaService {
         produceLineInfo(lolName);
         Thread.sleep(10000);
         produceFullSearch(lolName);
+        Thread.sleep(1000);
 
         //머신러닝
-        userInfoService.updateTrollPossibility(gameRecord);
+        userInfoService.updateTrollPossibility(lolName);
+        Thread.sleep(3000);
+        userInfoService.updateCluster(lolName);
     }
+
 
     public void produceFullSearch(String lolName) throws IOException, InterruptedException {
         String encodedLolName = URLEncoder.encode(lolName, "utf-8");
