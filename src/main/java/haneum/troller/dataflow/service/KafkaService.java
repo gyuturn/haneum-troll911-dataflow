@@ -37,7 +37,7 @@ public class KafkaService {
         produceLineInfo(lolName);
         Thread.sleep(10000);
         produceFullSearch(lolName);
-        Thread.sleep(5000);
+        Thread.sleep(1000);
 
         //머신러닝
         userInfoService.updateTrollPossibility(lolName);
