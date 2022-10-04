@@ -69,7 +69,8 @@ public class KafkaScheduler {
      */
     private final UserInfoRepository userInfoRepository;
     private final UserInfoService userInfoService;
-    @Scheduled(cron = "0 0 0/1 * * *")
+//    @Scheduled(cron = "0 0 0/1 * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void fixTrollAndCluster() throws JSONException, JsonProcessingException, InterruptedException {
         List<UserInfo> userInfoList = userInfoRepository.findByTrollPossibility("NaN");
 
