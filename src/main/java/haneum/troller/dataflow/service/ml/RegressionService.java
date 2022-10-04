@@ -32,7 +32,7 @@ public class RegressionService {
          * gamemode가 Classic인것만 선택
          * gamerecords 사이즈 10개로 고정
          */
-        List<GamePerRecord> gamePerRecords = gamePerRecordRepository.findByNameAndGameModeOrderByGameStartTimeStampDesc(lolName,"CLASSIC");
+        List<GamePerRecord> gamePerRecords = gamePerRecordRepository.findByNameAndGameMode(lolName,"CLASSIC");
 
         int listSize = gamePerRecords.size();
         if (listSize >= 10) {
