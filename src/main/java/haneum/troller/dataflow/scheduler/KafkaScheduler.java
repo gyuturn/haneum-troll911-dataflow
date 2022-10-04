@@ -65,25 +65,20 @@ public class KafkaScheduler {
 
     /**
      * 트롤확률 및 cluster 업데이트용
-     * 매일 자정마다 주기적 업데이트
+     * 1시간마다 주기적 업데이트
      */
-//    private final UserInfoRepository userInfoRepository;
-//    private final UserInfoService userInfoService;
-////    @Scheduled(cron = "0 0 0 * * *")
-//    @Scheduled(fixedDelay=1000)
-//    public void fixTrollAndCluster() throws JSONException, JsonProcessingException, InterruptedException {
-////        List<String> troll = new ArrayList<>();
-////        troll.add("NaN");
-////        troll.add("0");
-//        List<UserInfo> userInfoList = userInfoRepository.findByClusterNull();
-//
-//        System.out.println("userInfoList.size = " + userInfoList.size());
-//
-//        for (UserInfo userInfo : userInfoList) {
-//            if(userInfo.getTrollPossibility().equals("0")||userInfo.getTrollPossibility().equals("NaN")) continue;
-//            userInfoService.updateCluster(userInfo.getLolName());
-//        }
-//    }
+    private final UserInfoRepository userInfoRepository;
+    private final UserInfoService userInfoService;
+    @Scheduled(cron = "0 0 0/1 * * *")
+    public void fixTrollAndCluster() throws JSONException, JsonProcessingException, InterruptedException {
+        List<UserInfo> userInfoList = userInfoRepository.findByTrollPossibility("NaN");
+
+        for (UserInfo userInfo : userInfoList) {
+            String lolName = userInfo.getLolName();
+            userInfoService.updateTrollPossibility(lolName);
+            userInfoService.updateCluster(lolName);
+        }
+    }
 
 
 
