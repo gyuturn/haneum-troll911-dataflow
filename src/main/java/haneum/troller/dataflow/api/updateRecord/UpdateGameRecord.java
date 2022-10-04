@@ -29,9 +29,7 @@ import java.util.Optional;
 @Slf4j
 public class UpdateGameRecord {
 
-    private final KafkaScheduler kafkaScheduler;
     private final GameRecordRepository gameRecordRepository;
-    private final UserInfoService userInfoService;
     private final KafkaService kafkaService;
 
 
