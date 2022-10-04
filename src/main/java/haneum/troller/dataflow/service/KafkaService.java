@@ -39,7 +39,8 @@ public class KafkaService {
         produceFullSearch(lolName);
 
         //머신러닝
-        userInfoService.updateTrollPossibility(gameRecord);
+        userInfoService.updateTrollPossibility(lolName);
+        userInfoService.updateCluster(lolName);
     }
 
     public void produceFullSearch(String lolName) throws IOException, InterruptedException {
