@@ -24,7 +24,7 @@
 - 크롤링을 통해 롤 닉네임을 S3에 보관 
 - https://github.com/gyuturn/haneum-ml -> 크롤링 정보 참고
 
-### nifi 
+### NiFi 
 ![image](https://user-images.githubusercontent.com/87477702/192939423-f2fe73d9-bb9f-44aa-b05b-b5d22481bac5.png)
 - 실제 NiFi Process진행 흐름도
 - http://52.79.58.170:8443/nifi
