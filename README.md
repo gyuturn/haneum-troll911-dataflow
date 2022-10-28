@@ -1,6 +1,7 @@
 # backend-dataflow
 - 프로젝트 상세 설명: https://github.com/gyuturn/hameum-backend
 - Read.me 참고
+- 현재 비용문제로 인해 서버 닫힌 상태
 
 ### 사용목적
 - kafka와 spring scheduler를 통한 약 만명의 유저 전적 저장
